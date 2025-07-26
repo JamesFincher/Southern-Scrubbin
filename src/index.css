@@ -111,6 +111,64 @@
   --southern-shadow: 0 4px 25px -2px rgba(0, 175, 175, 0.1);
 }
 
+/* Keyframes for sparkle and animation effects */
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(0.8) rotate(0deg); 
+  }
+  25% { 
+    opacity: 0.8; 
+    transform: scale(1.1) rotate(90deg); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2) rotate(180deg); 
+  }
+  75% { 
+    opacity: 0.6; 
+    transform: scale(1.05) rotate(270deg); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) translateX(0px); 
+  }
+  33% { 
+    transform: translateY(-15px) translateX(5px); 
+  }
+  66% { 
+    transform: translateY(-5px) translateX(-3px); 
+  }
+}
+
+@keyframes wave {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  25% { 
+    transform: translateY(-10px) rotate(1deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(0deg); 
+  }
+  75% { 
+    transform: translateY(-10px) rotate(-1deg); 
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { 
+    opacity: 0.8; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05); 
+  }
+}
+
 /* Base layer customizations */
 @layer base {
   * {
@@ -176,6 +234,56 @@
   .animate-gentle-float {
     animation: float 4s ease-in-out infinite;
   }
+
+  /* Random sparkle variations for natural twinkling */
+  .animate-sparkle-random-1 {
+    animation: sparkle 1.8s ease-in-out infinite;
+    animation-delay: 0.2s;
+    will-change: transform, opacity;
+  }
+
+  .animate-sparkle-random-2 {
+    animation: sparkle 2.3s ease-in-out infinite;
+    animation-delay: 0.7s;
+    will-change: transform, opacity;
+  }
+
+  .animate-sparkle-random-3 {
+    animation: sparkle 2.1s ease-in-out infinite;
+    animation-delay: 1.1s;
+    will-change: transform, opacity;
+  }
+
+  .animate-sparkle-random-4 {
+    animation: sparkle 2.6s ease-in-out infinite;
+    animation-delay: 0.4s;
+    will-change: transform, opacity;
+  }
+
+  .animate-sparkle-random-5 {
+    animation: sparkle 1.9s ease-in-out infinite;
+    animation-delay: 1.3s;
+    will-change: transform, opacity;
+  }
+
+  /* Float variations */
+  .animate-float-random-1 {
+    animation: float 3.2s ease-in-out infinite;
+    animation-delay: 0.5s;
+    will-change: transform;
+  }
+
+  .animate-float-random-2 {
+    animation: float 4.1s ease-in-out infinite;
+    animation-delay: 1.2s;
+    will-change: transform;
+  }
+
+  .animate-float-random-3 {
+    animation: float 3.7s ease-in-out infinite;
+    animation-delay: 0.9s;
+    will-change: transform;
+  }
   
   /* Custom sparkle effect */
   .sparkle-container {
@@ -202,6 +310,69 @@
     bottom: -10px;
     left: -10px;
     animation-delay: 1s;
+  }
+
+  /* Random background sparkles - CSS only */
+  .bg-sparkles {
+    position: relative;
+  }
+
+  .bg-sparkles::before,
+  .bg-sparkles::after {
+    content: '✨';
+    position: absolute;
+    pointer-events: none;
+    font-size: 1rem;
+    opacity: 0.3;
+    color: var(--color-primary);
+  }
+
+  .bg-sparkles::before {
+    top: 20%;
+    right: 15%;
+    animation: sparkle 2.1s ease-in-out infinite;
+    animation-delay: 0.3s;
+  }
+
+  .bg-sparkles::after {
+    bottom: 25%;
+    left: 20%;
+    animation: float 3.4s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+
+  /* Multiple sparkle decorations */
+  .sparkle-field {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sparkle-field::before,
+  .sparkle-field::after {
+    content: '✨ ✨ ✨';
+    position: absolute;
+    font-size: 0.8rem;
+    opacity: 0.2;
+    color: var(--color-secondary);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 2rem;
+  }
+
+  .sparkle-field::before {
+    top: 10%;
+    left: -5%;
+    animation: float 4.2s ease-in-out infinite;
+    animation-delay: 0.8s;
+    transform: rotate(-15deg);
+  }
+
+  .sparkle-field::after {
+    bottom: 15%;
+    right: -5%;
+    animation: wave 3.8s ease-in-out infinite;
+    animation-delay: 2.1s;
+    transform: rotate(15deg);
   }
 }
 

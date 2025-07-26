@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
+import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 
@@ -27,7 +28,7 @@ const GeographicPin = () => (
       />
     </div>
     
-    {/* Sparkle accent */}
+    {/* Enhanced sparkle accents */}
     <motion.div
       className="absolute -top-2 -right-2 text-secondary text-xl"
       variants={sparkleVariants.twinkling}
@@ -35,6 +36,25 @@ const GeographicPin = () => (
     >
       ✨
     </motion.div>
+    
+    {/* Additional sparkles around the pin */}
+    <RandomSparkle 
+      type="randomFloating" 
+      position={{ x: '-10px', y: '10px' }} 
+      className="text-primary text-sm"
+      emoji="⭐"
+    />
+    <RandomSparkle 
+      type="randomDancing" 
+      position={{ x: '60px', y: '20px' }} 
+      className="text-secondary text-lg"
+      emoji="💫"
+    />
+    <RandomSparkle 
+      type="randomTwinkling" 
+      position={{ x: '10px', y: '-15px' }} 
+      className="text-primary text-xs"
+    />
   </motion.div>
 );
 
@@ -91,6 +111,30 @@ const CoverageArea = () => {
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-xs text-primary font-medium">
               Ten Mile
             </div>
+            
+            {/* Sparkles around the coverage area */}
+            <RandomSparkle 
+              type="randomTwinkling" 
+              position={{ x: '15%', y: '15%' }} 
+              className="text-secondary text-xs"
+            />
+            <RandomSparkle 
+              type="randomFloating" 
+              position={{ x: '85%', y: '25%' }} 
+              className="text-primary text-sm"
+              emoji="⭐"
+            />
+            <RandomSparkle 
+              type="randomDancing" 
+              position={{ x: '20%', y: '80%' }} 
+              className="text-secondary text-xs"
+              emoji="💫"
+            />
+            <RandomSparkle 
+              type="randomTwinkling" 
+              position={{ x: '75%', y: '75%' }} 
+              className="text-primary text-xs"
+            />
           </motion.div>
           
           <motion.p
@@ -114,8 +158,48 @@ const ServiceArea = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-20 bg-southern-gradient" id="service-area">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="py-20 bg-southern-gradient relative overflow-hidden" id="service-area">
+      {/* Enhanced background sparkles with random effects */}
+      <BackgroundSparkles count={6} className="opacity-30" />
+      
+      {/* Additional random sparkles for visual interest */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '15%', y: '20%' }} 
+          className="text-secondary/40 text-xl"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '85%', y: '35%' }} 
+          className="text-primary/40 text-lg"
+          emoji="⭐"
+        />
+        <RandomSparkle 
+          type="randomDancing" 
+          position={{ x: '20%', y: '70%' }} 
+          className="text-secondary/50 text-xl"
+          emoji="💫"
+        />
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '90%', y: '75%' }} 
+          className="text-primary/40 text-lg"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '10%', y: '50%' }} 
+          className="text-secondary/30 text-sm"
+        />
+        <RandomSparkle 
+          type="randomDancing" 
+          position={{ x: '75%', y: '15%' }} 
+          className="text-primary/50 text-lg"
+          emoji="✨"
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 relative z-10">
         {/* Section header */}
         <motion.div
           ref={ref}
@@ -173,19 +257,36 @@ const ServiceArea = () => {
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-gray-800 opacity-80"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               <span className="text-primary text-lg">🚗</span>
               <span className="text-sm font-medium">Reliable local service</span>
+              <RandomSparkle 
+                type="randomTwinkling" 
+                position={{ x: '0px', y: '-25px' }} 
+                className="text-primary text-xs"
+              />
             </div>
             <div className="hidden sm:block w-px h-4 bg-gray-300"></div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               <span className="text-secondary text-lg">⏰</span>
               <span className="text-sm font-medium">On-time guarantee</span>
+              <RandomSparkle 
+                type="randomFloating" 
+                position={{ x: '2px', y: '-20px' }} 
+                className="text-secondary text-xs"
+                emoji="⭐"
+              />
             </div>
             <div className="hidden sm:block w-px h-4 bg-gray-300"></div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               <span className="text-accent text-lg">🏠</span>
               <span className="text-sm font-medium">Ten Mile-based</span>
+              <RandomSparkle 
+                type="randomDancing" 
+                position={{ x: '1px', y: '-22px' }} 
+                className="text-accent text-xs"
+                emoji="💫"
+              />
             </div>
           </motion.div>
 
@@ -195,7 +296,7 @@ const ServiceArea = () => {
             variants={getVariants(scrollVariants.fadeInUp)}
           >
             <motion.button
-              className="btn-primary text-lg px-10 py-4 sparkle-container"
+              className="btn-primary text-lg px-10 py-4 sparkle-container relative"
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 15px 50px -10px rgba(0, 175, 175, 0.3)",
@@ -204,6 +305,12 @@ const ServiceArea = () => {
               transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <span className="relative z-10">Check My Availability</span>
+              <RandomSparkle 
+                type="randomTwinkling" 
+                position={{ x: '95%', y: '10%' }} 
+                className="text-white text-sm"
+                emoji="✨"
+              />
             </motion.button>
             
             <p className="text-gray-800 mt-4 text-sm">

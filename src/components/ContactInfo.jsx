@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useRef } from 'react';
-import { scrollVariants, getVariants } from '../utils/animations';
+import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
 import { useInView } from 'motion/react';
 
 // Contact info card component
@@ -19,11 +19,21 @@ const ContactInfoCard = ({ icon, title, content, action, delay = 0 }) => {
       whileHover={{ y: -5, scale: 1.02 }}
     >
       <motion.div
-        className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300"
+        className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300 relative"
         whileHover={{ rotate: [0, -10, 10, 0] }}
         transition={{ duration: 0.5 }}
       >
         {icon}
+        {(icon === "📞" || icon === "📧") && (
+          <motion.div
+            className="absolute -top-1 -right-1 text-secondary text-xs"
+            variants={sparkleVariants.twinkling}
+            animate="twinkling"
+            style={{ animationDelay: `${delay + 0.5}s` }}
+          >
+            ✨
+          </motion.div>
+        )}
       </motion.div>
       <h3 className="font-serif text-lg font-semibold text-accent mb-2">
         {title}
@@ -57,10 +67,18 @@ const TestimonialCard = ({ testimonial, delay = 0 }) => {
       animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
       transition={{ delay, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <div className="flex items-center mb-4">
+      <div className="flex items-center mb-4 relative">
         <div className="flex text-secondary text-lg">
           ⭐⭐⭐⭐⭐
         </div>
+        <motion.div
+          className="absolute -top-1 -right-2 text-secondary text-xs"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: `${delay + 1}s` }}
+        >
+          ✨
+        </motion.div>
       </div>
       <p className="text-gray-800 italic mb-4 leading-relaxed">
         "{testimonial.text}"

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { scrollVariants, getVariants } from '../utils/animations';
+import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 
@@ -38,8 +38,58 @@ const WhatIClean = () => {
   ];
 
   return (
-    <section className="py-20 bg-white" id="details">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="relative py-20 bg-white overflow-hidden" id="details">
+      {/* Background sparkles */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <motion.div
+          className="absolute top-20 left-10 text-primary opacity-60"
+          variants={getVariants(sparkleVariants.floating)}
+          custom={0.5}
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          className="absolute top-32 right-16 text-secondary opacity-50"
+          variants={getVariants(sparkleVariants.twinkling)}
+          custom={1}
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          className="absolute top-64 left-1/4 text-primary opacity-40"
+          variants={getVariants(sparkleVariants.dancing)}
+          custom={1.5}
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          className="absolute bottom-40 right-20 text-secondary opacity-60"
+          variants={getVariants(sparkleVariants.floating)}
+          custom={2}
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          className="absolute bottom-20 left-1/3 text-primary opacity-50"
+          variants={getVariants(sparkleVariants.twinkling)}
+          custom={0.8}
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          className="absolute top-1/2 right-8 text-secondary opacity-40"
+          variants={getVariants(sparkleVariants.dancing)}
+          custom={2.2}
+        >
+          ✨
+        </motion.div>
+      </motion.div>
+
+      <div className="relative max-w-6xl mx-auto px-4">
         {/* Section header */}
         <motion.div
           ref={ref}
@@ -76,7 +126,28 @@ const WhatIClean = () => {
               variants={getVariants(scrollVariants.fadeInUp)}
             >
               <div className="text-center mb-6">
-                <div className="text-4xl mb-3">{area.icon}</div>
+                <div className="relative inline-block">
+                  <div className="text-4xl mb-3">{area.icon}</div>
+                  {/* Icon sparkles */}
+                  <motion.div
+                    className="absolute -top-1 -right-1 text-xs text-secondary opacity-70"
+                    variants={getVariants(sparkleVariants.twinkling)}
+                    custom={index * 0.3}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                  >
+                    ✨
+                  </motion.div>
+                  <motion.div
+                    className="absolute -bottom-1 -left-1 text-xs text-primary opacity-60"
+                    variants={getVariants(sparkleVariants.floating)}
+                    custom={index * 0.4 + 0.5}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                  >
+                    ✨
+                  </motion.div>
+                </div>
                 <h3 className="text-2xl font-display font-semibold text-primary">
                   {area.category}
                 </h3>

@@ -1,6 +1,6 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import { scrollVariants, getVariants } from '../utils/animations';
+import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
 
 // Trust message items with icons
 const trustItems = [
@@ -100,9 +100,29 @@ const TrustBar = () => {
   });
 
   return (
-    <section className="relative py-8 bg-white border-b border-gray-100">
+    <section className="relative py-8 bg-white border-b border-gray-100 overflow-hidden">
       {/* Background gradient for subtle depth */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary-50/30 via-transparent to-accent-50/30" />
+      
+      {/* Subtle background sparkles */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute top-4 left-1/4 text-secondary-200 text-sm"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: '1.5s' }}
+        >
+          ✨
+        </motion.div>
+        <motion.div 
+          className="absolute top-6 right-1/4 text-secondary-200 text-sm"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '2.8s' }}
+        >
+          ⭐
+        </motion.div>
+      </div>
       
       {/* Container with trust messaging */}
       <motion.div

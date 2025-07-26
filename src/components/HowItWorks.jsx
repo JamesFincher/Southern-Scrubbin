@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
-import { scrollVariants, getVariants } from '../utils/animations';
+import { scrollVariants, getVariants, sparkleVariants } from '../utils/animations';
 
 const HowItWorks = () => {
   const ref = useRef(null);
@@ -32,21 +32,100 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-20 bg-white" id="how-it-works">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="relative py-20 bg-white overflow-hidden" id="how-it-works">
+      {/* Background Sparkles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Floating background sparkles using mix of regular and random variants */}
+        <motion.div
+          className="absolute top-20 left-[10%] text-primary text-2xl opacity-60"
+          variants={sparkleVariants.randomTwinkling}
+          animate="randomTwinkling"
+        >
+          ✨
+        </motion.div>
+        
+        <motion.div
+          className="absolute top-32 right-[15%] text-secondary text-lg opacity-50"
+          variants={sparkleVariants.randomFloating}
+          animate="randomFloating"
+        >
+          ⭐
+        </motion.div>
+        
+        <motion.div
+          className="absolute top-40 left-[25%] text-accent text-xl opacity-40"
+          variants={sparkleVariants.floating}
+          animate="floating"
+        >
+          ✨
+        </motion.div>
+        
+        <motion.div
+          className="absolute bottom-32 right-[20%] text-primary text-lg opacity-50"
+          variants={sparkleVariants.randomDancing}
+          animate="randomDancing"
+        >
+          💫
+        </motion.div>
+        
+        <motion.div
+          className="absolute bottom-40 left-[15%] text-secondary text-xl opacity-40"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+        >
+          ⭐
+        </motion.div>
+
+        <motion.div
+          className="absolute top-60 right-[8%] text-accent text-lg opacity-45"
+          variants={sparkleVariants.dancing}
+          animate="dancing"
+        >
+          ✨
+        </motion.div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4">
         {/* Section header */}
         <motion.div
           ref={ref}
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
           variants={getVariants(scrollVariants.fadeInUp)}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.h2
-            className="text-5xl md:text-6xl font-display font-bold text-accent mb-6"
+            className="text-5xl md:text-6xl font-display font-bold text-accent mb-6 relative"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            How it <span className="text-primary">works</span>
+            How it <span className="text-primary relative">
+              works
+              {/* Sparkle on "works" */}
+              <motion.span
+                className="absolute -top-2 -right-4 text-secondary text-2xl opacity-70"
+                variants={sparkleVariants.randomTwinkling}
+                animate="randomTwinkling"
+              >
+                ✨
+              </motion.span>
+            </span>
+            
+            {/* Header sparkles */}
+            <motion.div
+              className="absolute -top-4 left-1/4 text-primary text-xl opacity-50"
+              variants={sparkleVariants.randomFloating}
+              animate="randomFloating"
+            >
+              ⭐
+            </motion.div>
+            
+            <motion.div
+              className="absolute -top-6 right-1/4 text-accent text-lg opacity-40"
+              variants={sparkleVariants.dancing}
+              animate="dancing"
+            >
+              💫
+            </motion.div>
           </motion.h2>
           <motion.p
             className="text-xl text-gray-800 max-w-3xl mx-auto leading-relaxed"
@@ -74,7 +153,7 @@ const HowItWorks = () => {
               >
                 {/* Step number circle */}
                 <motion.div
-                  className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white relative
+                  className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white relative sparkle-container
                     ${step.color === 'primary' ? 'bg-primary' : 
                       step.color === 'secondary' ? 'bg-secondary' : 'bg-accent'}`}
                   whileHover={{ 
@@ -87,28 +166,55 @@ const HowItWorks = () => {
                 >
                   <span className="relative z-10">{step.number}</span>
                   
-                  {/* Sparkle effect for step 3 */}
+                  {/* Interactive sparkles around the circle */}
+                  <motion.div
+                    className="absolute -top-2 -right-2 text-white text-sm opacity-70"
+                    variants={sparkleVariants.randomTwinkling}
+                    animate="randomTwinkling"
+                  >
+                    ✨
+                  </motion.div>
+                  
+                  <motion.div
+                    className="absolute -bottom-1 -left-2 text-white text-xs opacity-60"
+                    variants={sparkleVariants.twinkling}
+                    animate="twinkling"
+                  >
+                    ⭐
+                  </motion.div>
+                  
+                  {/* Enhanced sparkle effect for step 3 */}
                   {index === 2 && (
-                    <motion.div
-                      className="absolute inset-0 flex items-center justify-center"
-                      animate={{
-                        rotate: [0, 360],
-                        scale: [1, 1.2, 1]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      <span className="text-white text-lg opacity-60">✨</span>
-                    </motion.div>
+                    <>
+                      <motion.div
+                        className="absolute inset-0 flex items-center justify-center"
+                        animate={{
+                          rotate: [0, 360],
+                          scale: [1, 1.2, 1]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      >
+                        <span className="text-white text-lg opacity-60">✨</span>
+                      </motion.div>
+                      
+                      <motion.div
+                        className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-white text-xs opacity-50"
+                        variants={sparkleVariants.randomFloating}
+                        animate="randomFloating"
+                      >
+                        💫
+                      </motion.div>
+                    </>
                   )}
                 </motion.div>
 
                 {/* Step icon */}
                 <motion.div
-                  className="text-4xl mb-4"
+                  className="text-4xl mb-4 relative"
                   animate={{
                     y: [0, -8, 0]
                   }}
@@ -119,7 +225,37 @@ const HowItWorks = () => {
                     ease: "easeInOut"
                   }}
                 >
-                  {step.icon}
+                  <span className="relative z-10">{step.icon}</span>
+                  
+                  {/* Icon sparkles */}
+                  {step.icon === "✨" ? (
+                    // Extra sparkles for the cleaning step
+                    <>
+                      <motion.div
+                        className="absolute -top-2 -right-3 text-primary text-lg opacity-60"
+                        variants={sparkleVariants.randomDancing}
+                        animate="randomDancing"
+                      >
+                        💫
+                      </motion.div>
+                      <motion.div
+                        className="absolute -bottom-2 -left-3 text-secondary text-sm opacity-50"
+                        variants={sparkleVariants.randomTwinkling}
+                        animate="randomTwinkling"
+                      >
+                        ⭐
+                      </motion.div>
+                    </>
+                  ) : (
+                    // Subtle sparkles for other icons
+                    <motion.div
+                      className="absolute -top-1 -right-2 text-accent text-sm opacity-40"
+                      variants={sparkleVariants.twinkling}
+                      animate="twinkling"
+                    >
+                      ✨
+                    </motion.div>
+                  )}
                 </motion.div>
 
                 {/* Step content */}
@@ -150,13 +286,13 @@ const HowItWorks = () => {
 
         {/* Call to action */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-16 relative"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ delay: 1.2, duration: 0.8 }}
         >
           <motion.button
-            className="btn-primary text-lg px-12 py-5 sparkle-container"
+            className="btn-primary text-lg px-12 py-5 sparkle-container relative"
             whileHover={{
               scale: 1.05,
               boxShadow: "0 15px 50px -10px rgba(0, 175, 175, 0.3)",
@@ -164,7 +300,41 @@ const HowItWorks = () => {
             whileTap={{ scale: 0.98 }}
           >
             <span className="relative z-10">Get Your Free Estimate</span>
+            
+            {/* Button sparkles */}
+            <motion.div
+              className="absolute -top-3 -right-3 text-secondary text-lg opacity-80"
+              variants={sparkleVariants.randomTwinkling}
+              animate="randomTwinkling"
+            >
+              ✨
+            </motion.div>
+            
+            <motion.div
+              className="absolute -bottom-2 -left-3 text-accent text-sm opacity-60"
+              variants={sparkleVariants.randomFloating}
+              animate="randomFloating"
+            >
+              ⭐
+            </motion.div>
           </motion.button>
+          
+          {/* CTA area sparkles */}
+          <motion.div
+            className="absolute -top-8 left-1/3 text-primary text-xl opacity-40"
+            variants={sparkleVariants.dancing}
+            animate="dancing"
+          >
+            💫
+          </motion.div>
+          
+          <motion.div
+            className="absolute -top-6 right-1/3 text-secondary text-lg opacity-50"
+            variants={sparkleVariants.randomDancing}
+            animate="randomDancing"
+          >
+            ✨
+          </motion.div>
           
           <p className="text-gray-800 mt-4 text-sm">
             ⚡ Quick response • 📞 Personal service • 🎯 No surprises

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useRef } from 'react';
-import { scrollVariants, getVariants } from '../utils/animations';
+import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
 import { useInView } from 'motion/react';
 import ContactForm from './ContactForm';
 import ContactInfo from './ContactInfo';
@@ -11,8 +11,60 @@ const Contact = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-20 bg-southern-gradient" id="contact">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-20 bg-southern-gradient relative overflow-hidden" id="contact">
+      {/* Background decorative sparkles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-24 left-20 text-secondary-200 text-xl"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '1.2s' }}
+        >
+          ✨
+        </motion.div>
+        <motion.div 
+          className="absolute top-52 right-16 text-secondary-200 text-lg"
+          variants={sparkleVariants.dancing}  
+          animate="dancing"
+          style={{ animationDelay: '2.8s' }}
+        >
+          ⭐
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-48 left-12 text-secondary-200 text-lg"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '0.9s' }}
+        >
+          💫
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-24 right-28 text-secondary-200 text-xl"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: '2.1s' }}
+        >
+          ✨
+        </motion.div>
+        <motion.div 
+          className="absolute top-1/2 left-8 text-secondary-200 text-sm"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '1.7s' }}
+        >
+          ⭐
+        </motion.div>
+        <motion.div 
+          className="absolute top-80 right-1/3 text-secondary-200 text-sm"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: '3.4s' }}
+        >
+          💫
+        </motion.div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Section header */}
         <motion.div
           ref={ref}

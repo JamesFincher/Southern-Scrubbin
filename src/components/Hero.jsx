@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { heroVariants, sparkleVariants, getVariants } from '../utils/animations';
+import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles.jsx';
 
 // Sparkle component for magical effects
 const SparkleIcon = ({ delay = 0, size = "w-6 h-6", className = "" }) => (
@@ -68,11 +69,21 @@ const CleaningIcon = () => (
         </motion.g>
       </svg>
       
-      {/* Animated sparkles around cleaning supplies */}
+      {/* Animated sparkles around cleaning supplies - mix of static and random */}
       <SparkleIcon delay={0} className="top-1 right-2" size="w-4 h-4" />
-      <SparkleIcon delay={0.7} className="top-6 left-1" size="w-3 h-3" />
+      <RandomSparkle 
+        type="randomTwinkling" 
+        position={{ x: '10%', y: '25%' }} 
+        size={0.75}
+        className="text-secondary"
+      />
       <SparkleIcon delay={1.2} className="bottom-4 right-0" size="w-5 h-5" />
-      <SparkleIcon delay={1.8} className="bottom-1 left-4" size="w-4 h-4" />
+      <RandomSparkle 
+        type="randomDancing" 
+        position={{ x: '70%', y: '85%' }} 
+        size={1}
+        className="text-primary"
+      />
     </div>
   </motion.div>
 );
@@ -80,42 +91,44 @@ const CleaningIcon = () => (
 // Main Hero Component
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-southern-gradient overflow-hidden">
-      {/* Background decorative elements */}
+    <section id="home" className="relative min-h-screen flex items-center justify-center bg-southern-gradient overflow-hidden sparkle-field">
+      {/* Background decorative elements with random sparkles */}
+      <BackgroundSparkles count={10} className="opacity-60" />
+      
+      {/* Additional random positioned sparkles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating background sparkles */}
-        <motion.div 
-          className="absolute top-20 left-10 text-secondary-200 text-2xl"
-          variants={sparkleVariants.floating}
-          animate="floating"
-          style={{ animationDelay: '0.5s' }}
-        >
-          ✨
-        </motion.div>
-        <motion.div 
-          className="absolute top-40 right-20 text-secondary-200 text-xl"
-          variants={sparkleVariants.floating}  
-          animate="floating"
-          style={{ animationDelay: '1.5s' }}
-        >
-          ⭐
-        </motion.div>
-        <motion.div 
-          className="absolute bottom-40 left-20 text-secondary-200 text-lg"
-          variants={sparkleVariants.floating}
-          animate="floating"
-          style={{ animationDelay: '2.5s' }}
-        >
-          ✨
-        </motion.div>
-        <motion.div 
-          className="absolute bottom-20 right-10 text-secondary-200 text-xl"
-          variants={sparkleVariants.floating}
-          animate="floating"
-          style={{ animationDelay: '3s' }}
-        >
-          💫
-        </motion.div>
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '15%', y: '20%' }} 
+          className="text-secondary-200 text-2xl"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '85%', y: '30%' }} 
+          className="text-primary-200 text-xl"
+          emoji="⭐"
+        />
+        <RandomSparkle 
+          type="randomDancing" 
+          position={{ x: '10%', y: '70%' }} 
+          className="text-secondary-300 text-lg"
+        />
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '90%', y: '80%' }} 
+          className="text-primary-200 text-xl"
+          emoji="💫"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '75%', y: '15%' }} 
+          className="text-secondary-200 text-sm"
+        />
+        <RandomSparkle 
+          type="randomDancing" 
+          position={{ x: '25%', y: '85%' }} 
+          className="text-primary-300 text-lg"
+        />
       </div>
 
       {/* Main content container */}

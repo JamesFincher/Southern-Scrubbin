@@ -47,6 +47,22 @@ const ServiceCard = ({ service, index }) => {
         >
           ✨
         </motion.div>
+        <motion.div
+          className="absolute -bottom-1 -left-1 text-secondary text-xs"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: `${index * 0.2 + 1.2}s` }}
+        >
+          ⭐
+        </motion.div>
+        <motion.div
+          className="absolute top-1 -left-2 text-secondary text-xs"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: `${index * 0.2 + 0.8}s` }}
+        >
+          💫
+        </motion.div>
       </motion.div>
 
       {/* Service title */}

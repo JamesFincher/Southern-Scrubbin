@@ -3,6 +3,21 @@ import { serviceVariants, sparkleVariants, scrollVariants, getVariants } from '.
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import ServiceCard from './ServiceCard';
+import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles.jsx';
+
+// Sparkle component for magical effects
+const SparkleIcon = ({ delay = 0, size = "w-6 h-6", className = "" }) => (
+  <motion.div
+    className={`${size} ${className} text-secondary absolute pointer-events-none`}
+    variants={sparkleVariants.twinkling}
+    animate="twinkling"
+    style={{ 
+      animationDelay: `${delay}s`,
+    }}
+  >
+    ✨
+  </motion.div>
+);
 
 // Service overview visual
 const ServiceOverview = () => {
@@ -36,6 +51,8 @@ const ServiceOverview = () => {
         >
           <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
             🏠
+            <SparkleIcon delay={0.3} className="top-1 right-1" size="w-3 h-3" />
+            <SparkleIcon delay={1.5} className="bottom-1 left-1" size="w-3 h-3" />
           </div>
           <h4 className="font-display text-lg font-medium text-primary mb-2">Home Cleaning</h4>
           <p className="text-sm text-gray-800">kitchens, baths, bedrooms, living areas, floors</p>
@@ -50,6 +67,8 @@ const ServiceOverview = () => {
         >
           <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
             🏨
+            <SparkleIcon delay={0.7} className="top-1 right-1" size="w-3 h-3" />
+            <SparkleIcon delay={1.9} className="bottom-1 left-1" size="w-3 h-3" />
           </div>
           <h4 className="font-display text-lg font-medium text-primary mb-2">Airbnb / Short‑Term Rental</h4>
           <p className="text-sm text-gray-800">guest‑ready turns, fresh linens, simple restock</p>
@@ -64,6 +83,8 @@ const ServiceOverview = () => {
         >
           <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
             🏢
+            <SparkleIcon delay={1.1} className="top-1 right-1" size="w-3 h-3" />
+            <SparkleIcon delay={2.3} className="bottom-1 left-1" size="w-3 h-3" />
           </div>
           <h4 className="font-display text-lg font-medium text-primary mb-2">Small Offices</h4>
           <p className="text-sm text-gray-800">clear desks/common areas, restrooms, floors, trash</p>
@@ -115,8 +136,41 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-100" id="services">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-20 bg-gray-100 relative overflow-hidden bg-sparkles" id="services">
+      {/* Enhanced background sparkles with random effects */}
+      <BackgroundSparkles count={8} className="opacity-40" />
+      
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '12%', y: '25%' }} 
+          className="text-secondary-200 text-xl"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '85%', y: '40%' }} 
+          className="text-primary-200 text-lg"
+          emoji="⭐"
+        />
+        <RandomSparkle 
+          type="randomDancing" 
+          position={{ x: '15%', y: '75%' }} 
+          className="text-secondary-300 text-xl"
+          emoji="💫"
+        />
+        <RandomSparkle 
+          type="randomTwinkling" 
+          position={{ x: '90%', y: '80%' }} 
+          className="text-primary-200 text-lg"
+        />
+        <RandomSparkle 
+          type="randomFloating" 
+          position={{ x: '50%', y: '30%' }} 
+          className="text-secondary-200 text-sm"
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Section header */}
         <motion.div
           ref={ref}

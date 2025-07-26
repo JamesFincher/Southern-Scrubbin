@@ -310,20 +310,30 @@ const Header = () => {
   useEffect(() => {
     const handleSectionDetection = () => {
       const sections = navItems.map(item => item.id);
-      const scrollTop = window.scrollY + 100;
-
-      for (const sectionId of sections) {
+      const scrollTop = window.scrollY;
+      const headerHeight = 80; // Account for fixed header
+      
+      // Find the section that's currently in view
+      let activeId = 'home'; // Default to home
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sectionId = sections[i];
         const element = document.getElementById(sectionId);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollTop >= offsetTop && scrollTop < offsetTop + offsetHeight) {
-            setActiveSection(sectionId);
+          const { offsetTop } = element;
+          if (scrollTop + headerHeight >= offsetTop) {
+            activeId = sectionId;
             break;
           }
         }
       }
+      
+      setActiveSection(activeId);
     };
 
+    // Initial check
+    handleSectionDetection();
+    
     window.addEventListener('scroll', handleSectionDetection, { passive: true });
     return () => window.removeEventListener('scroll', handleSectionDetection);
   }, []);

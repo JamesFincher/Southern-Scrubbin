@@ -3,6 +3,20 @@ import { useRef } from 'react';
 import { serviceVariants, sparkleVariants, getVariants } from '../utils/animations';
 import { useInView } from 'motion/react';
 
+// Sparkle component for magical effects
+const SparkleIcon = ({ delay = 0, size = "w-6 h-6", className = "" }) => (
+  <motion.div
+    className={`${size} ${className} text-secondary absolute pointer-events-none`}
+    variants={sparkleVariants.twinkling}
+    animate="twinkling"
+    style={{ 
+      animationDelay: `${delay}s`,
+    }}
+  >
+    ✨
+  </motion.div>
+);
+
 const SmallOffices = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -18,11 +32,54 @@ const SmallOffices = () => {
   return (
     <motion.section
       ref={ref}
-      className="py-20 bg-southern-gradient"
+      className="py-20 bg-southern-gradient relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.8 }}
     >
+      {/* Background decorative sparkles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-32 left-16 text-secondary-200 text-xl"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '0.5s' }}
+        >
+          ✨
+        </motion.div>
+        <motion.div 
+          className="absolute top-48 right-24 text-secondary-200 text-lg"
+          variants={sparkleVariants.dancing}  
+          animate="dancing"
+          style={{ animationDelay: '1.8s' }}
+        >
+          💼
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-48 left-28 text-secondary-200 text-xl"
+          variants={sparkleVariants.twinkling}
+          animate="twinkling"
+          style={{ animationDelay: '2.3s' }}
+        >
+          ⭐
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-32 right-16 text-secondary-200 text-lg"
+          variants={sparkleVariants.floating}
+          animate="floating"
+          style={{ animationDelay: '1.2s' }}
+        >
+          ✨
+        </motion.div>
+        <motion.div 
+          className="absolute top-60 left-1/2 transform -translate-x-1/2 text-secondary-200 text-sm"
+          variants={sparkleVariants.dancing}
+          animate="dancing"
+          style={{ animationDelay: '3.0s' }}
+        >
+          🏢
+        </motion.div>
+      </div>
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
         <motion.div
           className="card-sparkle relative group"
@@ -33,7 +90,7 @@ const SmallOffices = () => {
         >
           {/* Icon with animation */}
           <motion.div
-            className="mb-8 relative"
+            className="mb-8 relative sparkle-container"
             variants={getVariants(serviceVariants.icon)}
             whileHover="hover"
           >
@@ -51,21 +108,20 @@ const SmallOffices = () => {
               />
             </div>
             
-            {/* Floating sparkles */}
+            {/* Floating sparkles around icon */}
+            <SparkleIcon delay={0} className="top-1 right-2" size="w-4 h-4" />
+            <SparkleIcon delay={0.7} className="top-6 left-1" size="w-3 h-3" />
+            <SparkleIcon delay={1.2} className="bottom-4 right-0" size="w-5 h-5" />
+            <SparkleIcon delay={1.8} className="bottom-1 left-4" size="w-4 h-4" />
+            
+            {/* Additional office-themed sparkles */}
             <motion.div
-              className="absolute -top-3 -right-3 text-secondary text-lg"
-              variants={sparkleVariants.twinkling}
-              animate="twinkling"
+              className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-primary text-sm"
+              variants={sparkleVariants.dancing}
+              animate="dancing"
+              style={{ animationDelay: '2.3s' }}
             >
-              ✨
-            </motion.div>
-            <motion.div
-              className="absolute -bottom-2 -left-2 text-primary text-sm"
-              variants={sparkleVariants.twinkling}
-              animate="twinkling"
-              style={{ animationDelay: '0.5s' }}
-            >
-              ✨
+              💼
             </motion.div>
           </motion.div>
 
@@ -120,7 +176,27 @@ const SmallOffices = () => {
                     transition: { duration: 0.2 }
                   }}
                 >
-                  <span className="text-secondary text-xl font-bold flex-shrink-0 mt-0.5">✓</span>
+                  <motion.span 
+                    className="text-secondary text-xl font-bold flex-shrink-0 mt-0.5 relative"
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, 10, -10, 0],
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    ✓
+                    {/* Add a tiny sparkle on hover */}
+                    <motion.span
+                      className="absolute -top-1 -right-1 text-xs text-primary opacity-0"
+                      whileHover={{
+                        opacity: [0, 1, 0],
+                        scale: [0.5, 1.2, 0.5],
+                        transition: { duration: 0.4, ease: "easeInOut" }
+                      }}
+                    >
+                      ✨
+                    </motion.span>
+                  </motion.span>
                   <span className="text-base leading-relaxed">{service}</span>
                 </motion.li>
               ))}
@@ -135,9 +211,23 @@ const SmallOffices = () => {
             transition={{ delay: 1.2, duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 bg-primary/10 px-6 py-3 rounded-full border-2 border-primary/20">
-              <span className="text-primary text-lg">💼</span>
+              <motion.span 
+                className="text-primary text-lg"
+                variants={sparkleVariants.dancing}
+                animate="dancing"
+                style={{ animationDelay: '0.3s' }}
+              >
+                💼
+              </motion.span>
               <span className="text-primary font-semibold">Perfect for busy professionals</span>
-              <span className="text-primary text-lg">✨</span>
+              <motion.span 
+                className="text-primary text-lg"
+                variants={sparkleVariants.twinkling}
+                animate="twinkling"
+                style={{ animationDelay: '1.1s' }}
+              >
+                ✨
+              </motion.span>
             </div>
           </motion.div>
 
@@ -148,9 +238,21 @@ const SmallOffices = () => {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 1.4, duration: 0.5 }}
           >
-            <span>✨</span>
+            <motion.span
+              variants={sparkleVariants.twinkling}
+              animate="twinkling"
+              style={{ animationDelay: '0.7s' }}
+            >
+              ✨
+            </motion.span>
             <span>Professional space, sparkling clean</span>
-            <span>✨</span>
+            <motion.span
+              variants={sparkleVariants.twinkling}
+              animate="twinkling"
+              style={{ animationDelay: '1.9s' }}
+            >
+              ✨
+            </motion.span>
           </motion.div>
 
           {/* Hover decoration */}
