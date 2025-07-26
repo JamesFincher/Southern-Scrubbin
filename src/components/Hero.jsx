@@ -141,7 +141,7 @@ const Hero = () => {
           className="text-2xl md:text-3xl lg:text-4xl text-gray-800 font-body mb-8 leading-tight"
           variants={getVariants(heroVariants.sparkleAndScrub)}
         >
-          Owner‑operated cleaning for Knoxville and nearby communities (generally within ~10 miles).
+          Owner‑operated house cleaning for Ten Mile, Knoxville, and surrounding areas.
         </motion.h2>
 
         {/* Value proposition - personal touch */}
@@ -186,8 +186,8 @@ const Hero = () => {
           variants={getVariants(heroVariants.tagline)}
         >
           <div className="flex items-center gap-2">
-            <span className="text-primary text-lg">✓</span>
-            <span className="text-sm md:text-base font-medium">Reliable</span>
+            <span className="text-primary text-lg">🏠</span>
+            <span className="text-sm md:text-base font-medium">Local & dependable</span>
           </div>
           <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
           <div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ const Hero = () => {
           <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
           <div className="flex items-center gap-2">
             <span className="text-primary text-lg">💬</span>
-            <span className="text-sm md:text-base font-medium">Straightforward communication</span>
+            <span className="text-sm md:text-base font-medium">Simple communication</span>
           </div>
         </motion.div>
       </motion.div>

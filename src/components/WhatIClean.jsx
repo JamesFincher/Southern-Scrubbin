@@ -10,7 +10,7 @@ const WhatIClean = () => {
   const cleaningAreas = [
     {
       category: "Kitchens",
-      items: ["counters", "cabinet fronts", "sink & faucet", "stovetop", "microwave interior", "exterior of appliances", "floors"],
+      items: ["counters", "cabinet fronts", "sink/faucet", "stovetop", "microwave interior", "exterior of appliances", "floors"],
       icon: "🍳"
     },
     {
@@ -19,7 +19,7 @@ const WhatIClean = () => {
       icon: "🛁"
     },
     {
-      category: "Bedrooms & Living",
+      category: "Bedrooms & Living Areas",
       items: ["dust/wipe reachable surfaces", "tidy", "make beds (fresh sheets if left out)", "floors"],
       icon: "🛏️"
     }
@@ -33,7 +33,7 @@ const WhatIClean = () => {
 
   const notOffered = [
     "carpet shampoo/extraction", "pressure washing", "exterior windows", 
-    "high‑ladder/roof work", "post‑construction debris", "mold/biohazard/animal waste", 
+    "tall‑ladder/roof work", "post‑construction debris", "mold/biohazard/animal waste", 
     "severe hoarding", "active pest issues"
   ];
 
@@ -58,7 +58,7 @@ const WhatIClean = () => {
             className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            Straightforward cleaning with attention to detail in every area
+            I keep things tidy and comfortable—no drama, no shortcuts.
           </motion.p>
         </motion.div>
 

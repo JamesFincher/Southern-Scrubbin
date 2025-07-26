@@ -55,7 +55,7 @@ const CoverageArea = () => {
         <GeographicPin />
         
         <h3 className="text-2xl font-display font-semibold text-accent mb-4">
-          Knoxville & Surrounding Areas
+          Ten Mile & Knoxville Area
         </h3>
         
         <div className="relative max-w-md mx-auto">
@@ -89,7 +89,7 @@ const CoverageArea = () => {
             
             {/* Distance labels */}
             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-xs text-primary font-medium">
-              ~10 miles
+              Ten Mile
             </div>
           </motion.div>
           
@@ -135,8 +135,8 @@ const ServiceArea = () => {
             className="text-xl text-gray-800 max-w-2xl mx-auto leading-relaxed mb-8"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            I'm based in Knoxville, TN and serve nearby communities—generally 
-            within about 10 miles so I can stay reliable on timing.
+            Serving Ten Mile, Knoxville, and surrounding areas.
+            Add your ZIP in the estimate request and I'll get you scheduled.
           </motion.p>
         </motion.div>
 
@@ -185,7 +185,7 @@ const ServiceArea = () => {
             <div className="hidden sm:block w-px h-4 bg-gray-300"></div>
             <div className="flex items-center gap-2">
               <span className="text-accent text-lg">🏠</span>
-              <span className="text-sm font-medium">Knoxville-based</span>
+              <span className="text-sm font-medium">Ten Mile-based</span>
             </div>
           </motion.div>
 

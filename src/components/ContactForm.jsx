@@ -353,7 +353,7 @@ const ContactForm = () => {
 
       {/* Trust indicators */}
       <div className="text-center text-sm text-gray-800 mt-4">
-        <p>🔒 Your information is secure and never shared</p>
+        <p>🔒 No spam—I only use this info to reply about cleaning.</p>
         <p>📞 Phone: (TBD) • Email: (TBD)</p>
       </div>
     </form>

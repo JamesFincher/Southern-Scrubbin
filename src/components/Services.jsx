@@ -37,8 +37,8 @@ const ServiceOverview = () => {
           <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
             🏠
           </div>
-          <h4 className="font-display text-lg font-medium text-primary mb-2">Homes</h4>
-          <p className="text-sm text-gray-800">Kitchens, baths, bedrooms, living areas, floors</p>
+          <h4 className="font-display text-lg font-medium text-primary mb-2">Home Cleaning</h4>
+          <p className="text-sm text-gray-800">kitchens, baths, bedrooms, living areas, floors</p>
         </motion.div>
 
         {/* Airbnb / STR */}
@@ -52,7 +52,7 @@ const ServiceOverview = () => {
             🏨
           </div>
           <h4 className="font-display text-lg font-medium text-primary mb-2">Airbnb / Short‑Term Rental</h4>
-          <p className="text-sm text-gray-800">Guest‑ready turns, fresh linens, simple restock (supplies on‑site)</p>
+          <p className="text-sm text-gray-800">guest‑ready turns, fresh linens, simple restock</p>
         </motion.div>
 
         {/* Small Offices */}
@@ -66,7 +66,7 @@ const ServiceOverview = () => {
             🏢
           </div>
           <h4 className="font-display text-lg font-medium text-primary mb-2">Small Offices</h4>
-          <p className="text-sm text-gray-800">Clear desks/common areas, restrooms, floors, trash</p>
+          <p className="text-sm text-gray-800">clear desks/common areas, restrooms, floors, trash</p>
         </motion.div>
       </div>
     </motion.div>

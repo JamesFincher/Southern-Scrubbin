@@ -101,35 +101,31 @@ const FAQs = () => {
   const faqs = [
     {
       question: "Do you bring supplies?",
-      answer: "Yes. If you prefer yours, just leave them out with a note."
+      answer: "Yes. If you prefer your products, set them out with a note."
     },
     {
-      question: "Pets okay?",
-      answer: "Absolutely—please secure anxious animals."
+      question: "Can you use scent‑free or specific brands?",
+      answer: "Absolutely—happy to use yours."
     },
     {
-      question: "Recurring cleans?",
-      answer: "Yes—weekly, bi‑weekly, or monthly once I know your space."
+      question: "Do you clean interior windows?",
+      answer: "Yes, within safe reach (no tall ladders)."
     },
     {
-      question: "Interior windows?",
-      answer: "Within safe reach (no tall ladders)."
-    },
-    {
-      question: "Laundry?",
+      question: "Do you handle laundry?",
       answer: "Homes: fold‑only add‑on with your detergent. STRs: on‑site if time allows."
     },
     {
-      question: "Payments & receipts?",
-      answer: "I can send a text or email receipt after service."
+      question: "Do you take recurring cleans?",
+      answer: "Yes—weekly, bi‑weekly, or monthly once I know your space."
     },
     {
-      question: "Rescheduling?",
+      question: "Can I get an invoice or receipt?",
+      answer: "Yes—by email or text link."
+    },
+    {
+      question: "Need to reschedule?",
       answer: "No problem—please give as much notice as you can."
-    },
-    {
-      question: "Heavy‑duty/hazardous?",
-      answer: "Not at this time (post‑construction, biohazard, severe hoarding, pests, exterior/high‑ladder work)."
     }
   ];
 
