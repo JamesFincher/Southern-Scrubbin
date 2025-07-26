@@ -31,8 +31,7 @@ const Contact = () => {
             className="text-xl text-gray-800 max-w-3xl mx-auto leading-relaxed"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            Ready to experience the Southern Sparkle difference? 
-            Get your free quote today and see why Tennessee families trust us with their homes.
+            Prefer text or email? Works for me. Ready to get your space sparkling clean?
           </motion.p>
         </motion.div>
 

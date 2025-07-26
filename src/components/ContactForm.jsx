@@ -5,11 +5,18 @@ import { trustVariants, sparkleVariants, getVariants } from '../utils/animations
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
+    mobile: '',
     email: '',
-    phone: '',
-    service: '',
-    message: ''
+    address: '',
+    serviceType: '',
+    rooms: '',
+    addOns: '',
+    preferredDays: '',
+    parkingNotes: '',
+    // Honeypot field
+    website: ''
   });
+  const [textOk, setTextOk] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -22,6 +29,12 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Honeypot spam protection
+    if (formData.website) {
+      return; // Silently reject spam
+    }
+    
     setIsSubmitting(true);
     
     // Simulate form submission
@@ -53,9 +66,9 @@ const ContactForm = () => {
           Thank you kindly!
         </h3>
         <p className="text-gray-800 mb-6">
-          We've received your request and will get back to you within 24 hours. 
-          In the meantime, feel free to call us at{' '}
-          <span className="text-primary font-medium">(615) 555-CLEAN</span>
+          I've received your request and will get back to you soon. 
+          In the meantime, feel free to reach out directly at{' '}
+          <span className="text-primary font-medium">(TBD)</span>
         </p>
         <motion.div
           className="text-secondary text-2xl"
@@ -70,6 +83,18 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Honeypot field - hidden from users */}
+      <div className="hidden">
+        <input
+          type="text"
+          name="website"
+          value={formData.website}
+          onChange={handleInputChange}
+          tabIndex="-1"
+          autoComplete="off"
+        />
+      </div>
+
       <div className="grid md:grid-cols-2 gap-6">
         {/* Name input */}
         <motion.div
@@ -78,7 +103,7 @@ const ContactForm = () => {
           whileFocus="focus"
         >
           <label className="block text-sm font-medium text-accent mb-2">
-            Full Name *
+            Name *
           </label>
           <motion.input
             type="text"
@@ -93,6 +118,42 @@ const ContactForm = () => {
           />
         </motion.div>
 
+        {/* Mobile input */}
+        <motion.div
+          variants={getVariants(trustVariants.input)}
+          initial="rest"
+          whileFocus="focus"
+        >
+          <label className="block text-sm font-medium text-accent mb-2">
+            Mobile *
+          </label>
+          <motion.input
+            type="tel"
+            name="mobile"
+            required
+            value={formData.mobile}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle"
+            placeholder="(865) 555-0123"
+            variants={getVariants(trustVariants.input)}
+            whileFocus="focus"
+          />
+          <div className="mt-2 flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="textOk"
+              checked={textOk}
+              onChange={(e) => setTextOk(e.target.checked)}
+              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+            />
+            <label htmlFor="textOk" className="text-sm text-gray-600">
+              Text OK?
+            </label>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
         {/* Email input */}
         <motion.div
           variants={getVariants(trustVariants.input)}
@@ -100,7 +161,7 @@ const ContactForm = () => {
           whileFocus="focus"
         >
           <label className="block text-sm font-medium text-accent mb-2">
-            Email Address *
+            Email *
           </label>
           <motion.input
             type="email"
@@ -114,78 +175,143 @@ const ContactForm = () => {
             whileFocus="focus"
           />
         </motion.div>
-      </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Phone input */}
+        {/* Address input */}
         <motion.div
           variants={getVariants(trustVariants.input)}
           initial="rest"
           whileFocus="focus"
         >
           <label className="block text-sm font-medium text-accent mb-2">
-            Phone Number
+            Address/City *
           </label>
           <motion.input
-            type="tel"
-            name="phone"
-            value={formData.phone}
+            type="text"
+            name="address"
+            required
+            value={formData.address}
             onChange={handleInputChange}
             className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle"
-            placeholder="(615) 555-0123"
+            placeholder="City or ZIP code"
             variants={getVariants(trustVariants.input)}
             whileFocus="focus"
           />
         </motion.div>
+      </div>
 
-        {/* Service selection */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Service type */}
         <motion.div
           variants={getVariants(trustVariants.input)}
           initial="rest"
           whileFocus="focus"
         >
           <label className="block text-sm font-medium text-accent mb-2">
-            Service Needed
+            Service Type *
           </label>
           <motion.select
-            name="service"
-            value={formData.service}
+            name="serviceType"
+            required
+            value={formData.serviceType}
             onChange={handleInputChange}
             className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle bg-white"
             variants={getVariants(trustVariants.input)}
             whileFocus="focus"
           >
-            <option value="">Select a service</option>
-            <option value="kitchen">Kitchen Deep Clean</option>
-            <option value="bathroom">Bathroom Refresh</option>
-            <option value="living">Living Space Revival</option>
-            <option value="bedroom">Bedroom Sanctuary</option>
-            <option value="whole-home">Whole Home Harmony</option>
-            <option value="special">Special Occasions</option>
+            <option value="">Select service type</option>
+            <option value="home">Home</option>
+            <option value="str">STR/Office</option>
+            <option value="office">Office</option>
           </motion.select>
+        </motion.div>
+
+        {/* Beds/Baths or rooms */}
+        <motion.div
+          variants={getVariants(trustVariants.input)}
+          initial="rest"
+          whileFocus="focus"
+        >
+          <label className="block text-sm font-medium text-accent mb-2">
+            Beds/Baths (or rooms) *
+          </label>
+          <motion.input
+            type="text"
+            name="rooms"
+            required
+            value={formData.rooms}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle"
+            placeholder="e.g., 3 bed / 2 bath"
+            variants={getVariants(trustVariants.input)}
+            whileFocus="focus"
+          />
         </motion.div>
       </div>
 
-      {/* Message textarea */}
+      {/* Add-ons */}
       <motion.div
         variants={getVariants(trustVariants.input)}
         initial="rest"
         whileFocus="focus"
       >
         <label className="block text-sm font-medium text-accent mb-2">
-          Tell us about your cleaning needs
+          Add‑ons
         </label>
         <motion.textarea
-          name="message"
-          rows="4"
-          value={formData.message}
+          name="addOns"
+          rows="2"
+          value={formData.addOns}
           onChange={handleInputChange}
           className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 resize-none focus-sparkle"
-          placeholder="Describe your home, any specific needs, or questions you might have..."
+          placeholder="Any specific requests (inside oven, baseboards, etc.)"
           variants={getVariants(trustVariants.input)}
           whileFocus="focus"
         />
       </motion.div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Preferred days/times */}
+        <motion.div
+          variants={getVariants(trustVariants.input)}
+          initial="rest"
+          whileFocus="focus"
+        >
+          <label className="block text-sm font-medium text-accent mb-2">
+            Preferred days/times
+          </label>
+          <motion.input
+            type="text"
+            name="preferredDays"
+            value={formData.preferredDays}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle"
+            placeholder="e.g., Weekday mornings"
+            variants={getVariants(trustVariants.input)}
+            whileFocus="focus"
+          />
+        </motion.div>
+
+        {/* Parking/entry notes */}
+        <motion.div
+          variants={getVariants(trustVariants.input)}
+          initial="rest"
+          whileFocus="focus"
+        >
+          <label className="block text-sm font-medium text-accent mb-2">
+            Parking/entry notes
+          </label>
+          <motion.input
+            type="text"
+            name="parkingNotes"
+            value={formData.parkingNotes}
+            onChange={handleInputChange}
+            className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all duration-200 focus-sparkle"
+            placeholder="Special instructions"
+            variants={getVariants(trustVariants.input)}
+            whileFocus="focus"
+          />
+        </motion.div>
+      </div>
 
       {/* Submit button */}
       <motion.button
@@ -212,7 +338,7 @@ const ContactForm = () => {
           </motion.div>
         ) : (
           <>
-            <span className="relative z-10">Get Your Free Quote</span>
+            <span className="relative z-10">Request Estimate</span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0"
               whileHover={{
@@ -228,7 +354,7 @@ const ContactForm = () => {
       {/* Trust indicators */}
       <div className="text-center text-sm text-gray-800 mt-4">
         <p>🔒 Your information is secure and never shared</p>
-        <p>📞 Prefer to call? <span className="text-primary font-medium">(615) 555-CLEAN</span></p>
+        <p>📞 Phone: (TBD) • Email: (TBD)</p>
       </div>
     </form>
   );
