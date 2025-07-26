@@ -51,6 +51,7 @@
   /* Gray Scale */
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
+  --color-gray-150: #eeeff2;
   --color-gray-200: #e5e7eb;
   --color-gray-300: #d1d5db;
   --color-gray-400: #9ca3af;
@@ -374,6 +375,292 @@
     animation-delay: 2.1s;
     transform: rotate(15deg);
   }
+
+  /* Tabbed Services Section Styles */
+  .services-tabs {
+    @apply bg-white rounded-3xl p-6 lg:p-8;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Tab Navigation Responsive Design */
+  .tab-nav {
+    @apply flex flex-col sm:flex-row gap-2 sm:gap-4 p-2 bg-gray-50 rounded-2xl mb-8;
+  }
+
+  /* Individual Tab Button */
+  .tab-button {
+    @apply relative flex-1 px-4 py-3 sm:px-6 sm:py-4 rounded-xl font-medium text-center transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary-200;
+    /* Ensure 44px minimum touch target for mobile accessibility */
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .tab-button:not(.active) {
+    @apply text-gray-600 hover:text-primary hover:bg-white/50;
+  }
+
+  .tab-button.active {
+    @apply bg-white text-primary shadow-soft;
+    box-shadow: var(--shadow-gentle);
+  }
+
+  /* Tab button icon and text responsive layout */
+  .tab-button-content {
+    @apply flex items-center justify-center gap-2 sm:gap-3;
+  }
+
+  .tab-button-icon {
+    @apply text-2xl sm:text-3xl flex-shrink-0;
+  }
+
+  .tab-button-text {
+    @apply text-sm sm:text-base font-semibold;
+  }
+
+  /* Mobile-first tab layout adjustments */
+  @media (max-width: 640px) {
+    .tab-nav {
+      @apply gap-3;
+    }
+    
+    .tab-button {
+      @apply px-3 py-3;
+    }
+    
+    .tab-button-content {
+      @apply flex-col gap-1;
+    }
+    
+    .tab-button-text {
+      @apply text-xs leading-tight;
+    }
+  }
+
+  /* Tab Content Area */
+  .tab-content {
+    @apply min-h-[400px] sm:min-h-[450px] lg:min-h-[500px];
+  }
+
+  /* Service Tab Panel */
+  .service-tab-panel {
+    @apply space-y-6 lg:space-y-8;
+  }
+
+  /* Service Header in Tab */
+  .service-tab-header {
+    @apply text-center mb-6 lg:mb-8;
+  }
+
+  .service-tab-title {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-accent mb-4;
+  }
+
+  .service-tab-subtitle {
+    @apply text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed;
+  }
+
+  /* Service Features Grid */
+  .service-features-grid {
+    @apply grid gap-6 sm:gap-8;
+  }
+
+  /* Two-column layout for larger screens, single column for mobile */
+  .service-features-grid.has-description {
+    @apply lg:grid-cols-2 lg:gap-12;
+  }
+
+  /* Service Description Block */
+  .service-description {
+    @apply rounded-2xl p-6 lg:p-8;
+    background: linear-gradient(135deg, rgba(245, 183, 0, 0.1) 0%, rgba(0, 175, 175, 0.1) 100%);
+  }
+
+  .service-description-title {
+    @apply text-xl sm:text-2xl font-serif font-semibold text-accent mb-4;
+  }
+
+  .service-description-text {
+    @apply text-gray-700 leading-relaxed mb-6;
+  }
+
+  /* Service Features List */
+  .service-features-list {
+    @apply space-y-4 sm:space-y-5;
+  }
+
+  .service-features-title {
+    @apply text-xl sm:text-2xl font-serif font-semibold text-primary mb-6;
+  }
+
+  /* Individual Feature Item */
+  .service-feature-item {
+    @apply flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-xl;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .service-feature-icon {
+    @apply text-secondary text-lg sm:text-xl mt-1 flex-shrink-0;
+  }
+
+  .service-feature-text {
+    @apply text-gray-700 text-sm sm:text-base leading-relaxed;
+  }
+
+  /* Responsive icon sizing for tabs */
+  .service-icon-container {
+    @apply w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl flex items-center justify-center relative overflow-hidden;
+    background: linear-gradient(135deg, rgba(245, 183, 0, 0.1) 0%, rgba(0, 175, 175, 0.1) 100%);
+  }
+
+  .service-icon {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+
+  /* Call-to-action in tabs */
+  .service-cta {
+    @apply text-center pt-6 lg:pt-8 border-t border-gray-100;
+  }
+
+  .service-cta-text {
+    @apply flex items-center justify-center gap-2 text-primary font-medium text-sm sm:text-base;
+  }
+
+  /* Tablet-specific adjustments */
+  @media (min-width: 640px) and (max-width: 1024px) {
+    .tab-nav {
+      @apply gap-3;
+    }
+    
+    .tab-button {
+      @apply px-5 py-4;
+    }
+    
+    .service-features-grid.has-description {
+      @apply grid-cols-1;
+    }
+  }
+
+  /* Large screen optimizations */
+  @media (min-width: 1024px) {
+    .services-tabs {
+      @apply p-10;
+    }
+    
+    .tab-nav {
+      @apply gap-6;
+    }
+    
+    .service-tab-panel {
+      @apply space-y-10;
+    }
+  }
+
+  /* Touch interaction improvements for mobile */
+  @media (hover: none) {
+    .tab-button:hover {
+      @apply bg-transparent text-gray-600;
+    }
+    
+    .tab-button.active:hover {
+      @apply bg-white text-primary;
+    }
+  }
+
+  /* Focus states for keyboard navigation */
+  .tab-button:focus-visible {
+    @apply ring-4 ring-primary-200 ring-offset-2;
+  }
+
+  /* Animation for tab content transitions */
+  .tab-content-enter {
+    @apply opacity-0 transform translate-y-4;
+  }
+
+  .tab-content-enter-active {
+    @apply opacity-100 transform translate-y-0 transition-all duration-300;
+    transition-timing-function: var(--ease-southern);
+  }
+
+  .tab-content-exit {
+    @apply opacity-100 transform translate-y-0;
+  }
+
+  .tab-content-exit-active {
+    @apply opacity-0 transform -translate-y-4 transition-all duration-200;
+    transition-timing-function: var(--ease-gentle);
+  }
+
+  /* How it Works Stepper Component Styles */
+  .stepper-container {
+    @apply relative;
+  }
+
+  /* Connection line for desktop horizontal layout */
+  .stepper-container::before {
+    content: '';
+    @apply absolute top-10 left-1/6 right-1/6 h-0.5 bg-gray-200 z-0;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .stepper-container::before {
+      display: block;
+    }
+  }
+
+  /* Step number circle with enhanced design */
+  .step-circle {
+    @apply relative z-10 w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white;
+    min-width: 44px; /* Ensure 44px minimum touch target */
+    min-height: 44px;
+    box-shadow: var(--shadow-gentle);
+  }
+
+  .step-circle:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s var(--ease-southern);
+  }
+
+  /* Step content text styling */
+  .step-content {
+    @apply space-y-4 relative z-10;
+  }
+
+  .step-title {
+    @apply text-2xl font-serif font-semibold text-accent;
+  }
+
+  .step-description {
+    @apply text-gray-800 leading-relaxed max-w-sm mx-auto;
+  }
+
+  /* Mobile vertical layout adjustments */
+  @media (max-width: 767px) {
+    .stepper-container {
+      @apply space-y-12;
+    }
+    
+    .stepper-container::before {
+      display: none;
+    }
+  }
+
+  /* Enhanced focus states for accessibility */
+  .step-circle:focus-visible {
+    @apply outline-none ring-4 ring-offset-2;
+  }
+
+  .step-circle.primary:focus-visible {
+    @apply ring-primary-200;
+  }
+
+  .step-circle.secondary:focus-visible {
+    @apply ring-secondary-200;
+  }
+
+  .step-circle.accent:focus-visible {
+    @apply ring-accent-200;
+  }
 }
 
 /* Utilities layer for custom helper classes */
@@ -401,6 +688,28 @@
   
   .bg-sparkle-gradient {
     background: linear-gradient(135deg, rgba(245, 183, 0, 0.1) 0%, rgba(0, 175, 175, 0.1) 100%);
+  }
+
+  /* Safe area support for mobile devices */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Mobile sticky footer styles */
+  .mobile-sticky-cta {
+    @apply bg-white border-t border-gray-200;
+    box-shadow: 0 -4px 25px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Enhanced touch targets for mobile CTAs */
+  .mobile-cta-button {
+    @apply flex-1 flex items-center justify-center gap-2 rounded-xl py-3 px-3 font-medium transition-all duration-200 focus:outline-none;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .mobile-cta-button:active {
+    transform: scale(0.95);
   }
 }
 

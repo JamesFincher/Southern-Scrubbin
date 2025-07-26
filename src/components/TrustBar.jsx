@@ -1,6 +1,6 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
+import { sparkleVariants } from '../utils/animations';
 
 // Trust message items with icons
 const trustItems = [
@@ -21,7 +21,7 @@ const TrustItem = ({ item, index }) => {
   return (
     <motion.div
       ref={ref}
-      className="flex items-center gap-2 text-gray-700"
+      className="flex items-center gap-3 px-4 py-2 bg-white rounded-2xl shadow-soft border border-gray-100 text-gray-700"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{
@@ -30,8 +30,10 @@ const TrustItem = ({ item, index }) => {
         ease: [0.25, 0.46, 0.45, 0.94] // --ease-southern
       }}
       whileHover={{
-        scale: 1.05,
-        color: "#00AFAF", // primary color
+        scale: 1.02,
+        backgroundColor: "#f0fdfd", // primary-50
+        borderColor: "#00AFAF", // primary
+        boxShadow: "0 4px 25px -2px rgba(0, 175, 175, 0.1)",
         transition: {
           duration: 0.2,
           ease: [0.25, 0.1, 0.25, 1] // --ease-gentle
@@ -54,7 +56,7 @@ const TrustItem = ({ item, index }) => {
       </motion.span>
       
       {/* Trust message text */}
-      <span className="font-medium text-sm md:text-base whitespace-nowrap">
+      <span className="font-medium text-sm whitespace-nowrap">
         {item.text}
       </span>
     </motion.div>
@@ -136,17 +138,9 @@ const TrustBar = () => {
         }}
       >
         {/* Trust items container with responsive layout */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           {trustItems.map((item, index) => (
-            <div key={item.text} className="flex items-center gap-4 sm:gap-6 md:gap-8">
-              {/* Trust item */}
-              <TrustItem item={item} index={index} />
-              
-              {/* Separator dot (hidden after last item) */}
-              {index < trustItems.length - 1 && (
-                <SeparatorDot index={index} />
-              )}
-            </div>
+            <TrustItem key={item.text} item={item} index={index} />
           ))}
         </div>
 

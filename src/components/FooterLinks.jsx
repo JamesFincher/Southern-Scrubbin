@@ -1,7 +1,5 @@
 import { motion } from 'motion/react';
-import { useRef } from 'react';
 import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
-import { useInView } from 'motion/react';
 
 // Social media link component
 const SocialLink = ({ href, icon, label, delay = 0 }) => (

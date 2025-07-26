@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import TrustBar from './components/TrustBar';
 import Services from './components/Services';
 import WhatIClean from './components/WhatIClean';
 import AirbnbTurns from './components/AirbnbTurns';
@@ -14,6 +13,7 @@ import FAQs from './components/FAQs';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import MobileStickyFooter from './components/MobileStickyFooter';
 import { shouldReduceMotion } from './utils/animations';
 
 // Main App Component
@@ -61,12 +61,9 @@ function App() {
       <Header />
 
       {/* Main content */}
-      <main>
+      <main id="main-content" tabIndex="-1">
         {/* Hero Section */}
         <Hero />
-
-        {/* Trust Bar */}
-        <TrustBar />
 
         {/* Services Overview */}
         <Services />
@@ -102,18 +99,29 @@ function App() {
       {/* Footer */}
       <Footer />
 
+      {/* Mobile Sticky Footer CTA */}
+      <MobileStickyFooter />
+
       {/* Scroll to top button */}
       <motion.button
-        className="fixed bottom-8 right-8 w-12 h-12 bg-primary hover:bg-primary-600 text-white rounded-full shadow-gentle hover:shadow-warm flex items-center justify-center z-40"
+        className="fixed bottom-8 right-8 w-12 h-12 bg-primary hover:bg-primary-600 text-white rounded-full shadow-gentle hover:shadow-warm flex items-center justify-center z-40 md:z-40 hidden md:flex focus:outline-none focus:ring-4 focus:ring-primary-200 focus:ring-offset-2"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1 }}
         whileHover={{ scale: 1.1, y: -2 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        aria-label="Scroll to top"
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Return focus to skip link for better keyboard navigation
+          setTimeout(() => {
+            const skipLink = document.querySelector('a[href="#main-content"]');
+            if (skipLink) skipLink.focus();
+          }, 500);
+        }}
+        aria-label="Scroll to top of page"
+        title="Scroll to top"
       >
-        <span className="text-lg">↑</span>
+        <span className="text-lg" aria-hidden="true">↑</span>
       </motion.button>
     </div>
   );

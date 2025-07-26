@@ -1,10 +1,15 @@
 // Random Sparkle Utilities for Southern Sparkle & Scrub
+/* eslint-disable react-refresh/only-export-components */
 import { motion } from 'motion/react';
+import { memo, useMemo } from 'react';
 import { sparkleVariants } from './animations';
+import { useIntersectionObserver, gpuOptimizedTransforms } from './lazyUtils.jsx';
 
-// Generate random sparkle components for background ambiance
+// Generate random sparkle components for background ambiance (memoized for performance)
+const sparkleTypes = ['randomTwinkling', 'randomFloating', 'randomDancing'];
+
 export const generateRandomSparkles = (count = 6) => {
-  const sparkleTypes = ['randomTwinkling', 'randomFloating', 'randomDancing'];
+  // Use a seed-based approach for consistent but random sparkles
   const sparkles = [];
 
   for (let i = 0; i < count; i++) {
@@ -25,60 +30,92 @@ export const generateRandomSparkles = (count = 6) => {
   return sparkles;
 };
 
-// Random sparkle component with custom positioning
-export const RandomSparkle = ({ 
+// Optimized Random sparkle component with custom positioning
+export const RandomSparkle = memo(({ 
   type = 'randomTwinkling', 
   delay = 0, 
   size = 1,
   className = '',
   position = { x: '50%', y: '50%' },
-  emoji = '✨'
+  emoji = '✨',
+  lazy = false
 }) => {
-  const variants = sparkleVariants[type] || sparkleVariants.randomTwinkling;
-  
-  // Create variant with specific delay
-  const customVariants = {
-    ...variants,
-    transition: {
-      ...variants.transition,
-      delay: typeof variants.transition.delay === 'function' 
-        ? variants.transition.delay() + delay 
-        : delay,
-      duration: typeof variants.transition.duration === 'function'
-        ? variants.transition.duration()
-        : variants.transition.duration,
-    }
-  };
+  const [elementRef, isVisible] = useIntersectionObserver({
+    threshold: 0,
+    rootMargin: '100px',
+    triggerOnce: false
+  });
+
+  // Memoize variants to prevent unnecessary recalculations
+  const customVariants = useMemo(() => {
+    const variants = sparkleVariants[type] || sparkleVariants.randomTwinkling;
+    
+    return {
+      ...variants,
+      transition: {
+        ...variants.transition,
+        delay: typeof variants.transition.delay === 'function' 
+          ? variants.transition.delay() + delay 
+          : delay,
+        duration: typeof variants.transition.duration === 'function'
+          ? variants.transition.duration()
+          : variants.transition.duration,
+      }
+    };
+  }, [type, delay]);
+
+  // GPU-optimized styles
+  const optimizedStyle = useMemo(() => ({
+    left: position.x,
+    top: position.y,
+    fontSize: `${size}rem`,
+    willChange: 'transform, opacity',
+    transform: gpuOptimizedTransforms.translate(0, 0), // Force GPU layer
+  }), [position.x, position.y, size]);
+
+  // Don't render if lazy loading is enabled and component isn't visible
+  if (lazy && !isVisible) {
+    return <div ref={elementRef} className="absolute pointer-events-none" style={{ left: position.x, top: position.y }} />;
+  }
 
   return (
     <motion.div
+      ref={elementRef}
       className={`absolute pointer-events-none select-none ${className}`}
-      style={{
-        left: position.x,
-        top: position.y,
-        fontSize: `${size}rem`,
-        willChange: 'transform, opacity',
-      }}
+      style={optimizedStyle}
       variants={customVariants}
-      animate={type}
+      animate={isVisible ? type : false}
       initial={{ opacity: 0 }}
     >
       {emoji}
     </motion.div>
   );
-};
+});
 
-// Background sparkle container component
-export const BackgroundSparkles = ({ 
+RandomSparkle.displayName = 'RandomSparkle';
+
+// Optimized Background sparkle container component
+export const BackgroundSparkles = memo(({ 
   count = 8, 
   className = '',
-  sparkleEmoji = '✨'
+  sparkleEmoji = '✨',
+  lazy = true
 }) => {
-  const sparkles = generateRandomSparkles(count);
+  // Memoize sparkle generation to prevent recalculation on every render
+  const sparkles = useMemo(() => generateRandomSparkles(count), [count]);
+
+  const [elementRef, isVisible] = useIntersectionObserver({
+    threshold: 0,
+    rootMargin: '200px',
+    triggerOnce: false
+  });
 
   return (
-    <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
-      {sparkles.map((sparkle) => (
+    <div 
+      ref={elementRef}
+      className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
+    >
+      {(lazy ? isVisible : true) && sparkles.map((sparkle) => (
         <RandomSparkle
           key={sparkle.id}
           type={sparkle.type}
@@ -87,11 +124,14 @@ export const BackgroundSparkles = ({
           position={{ x: `${sparkle.x}%`, y: `${sparkle.y}%` }}
           emoji={sparkleEmoji}
           className="text-primary/30"
+          lazy={lazy}
         />
       ))}
     </div>
   );
-};
+});
+
+BackgroundSparkles.displayName = 'BackgroundSparkles';
 
 // CSS class name generator for random sparkle animations
 export const getRandomSparkleClass = () => {

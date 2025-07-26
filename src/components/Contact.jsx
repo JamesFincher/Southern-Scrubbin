@@ -2,7 +2,8 @@ import { motion } from 'motion/react';
 import { useRef } from 'react';
 import { scrollVariants, sparkleVariants, getVariants } from '../utils/animations';
 import { useInView } from 'motion/react';
-import ContactForm from './ContactForm';
+import ContactForm from './ContactFormRobust';
+import { trackCTA } from '../utils/analytics';
 import ContactInfo from './ContactInfo';
 
 // Main Contact Component
@@ -126,6 +127,10 @@ const Contact = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
                 className="btn-primary px-8 py-3"
+                onClick={() => {
+                  trackCTA.phoneClick('contact_final_cta');
+                  window.location.href = 'tel:+1234567890'; // TODO: Replace with actual phone
+                }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -133,6 +138,19 @@ const Contact = () => {
               </motion.button>
               <motion.button
                 className="btn-secondary px-8 py-3"
+                onClick={() => {
+                  trackCTA.click('get_quote_scroll', 'contact_final_cta');
+                  // Scroll to form
+                  const formElement = document.querySelector('form');
+                  if (formElement) {
+                    formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Focus first form field
+                    const firstInput = formElement.querySelector('input[name="name"]');
+                    if (firstInput) {
+                      setTimeout(() => firstInput.focus(), 500);
+                    }
+                  }
+                }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

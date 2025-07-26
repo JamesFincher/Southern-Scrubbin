@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { getVariants, easings } from '../utils/animations';
+import { easings } from '../utils/animations';
 
 // Logo component with house icon and sparkle effect
 const Logo = ({ className = "" }) => (
@@ -358,6 +358,14 @@ const Header = () => {
 
   return (
     <>
+      {/* Skip to main content link for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-lg z-[60] focus:outline-none focus:ring-4 focus:ring-primary-200"
+      >
+        Skip to main content
+      </a>
+      
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled

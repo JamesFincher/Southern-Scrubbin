@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { sparkleVariants } from '../utils/animations';
 import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles.jsx';
 
 const Footer = () => {

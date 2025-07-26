@@ -143,7 +143,7 @@ const Hero = () => {
 
         {/* Company name - clean, professional look */}
         <motion.h1
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-none"
+          className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-primary mb-6 leading-none"
           variants={getVariants(heroVariants.southern)}
         >
           Sparkle Scrub
@@ -171,6 +171,11 @@ const Hero = () => {
         >
           <motion.button
             className="btn-primary text-lg md:text-xl px-10 py-4 md:px-14 md:py-6 sparkle-container relative overflow-hidden font-semibold"
+            onClick={() => {
+              const quoteSection = document.getElementById('quote');
+              quoteSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            aria-label="Request a quick estimate for house cleaning services"
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 20px 60px -10px rgba(245, 183, 0, 0.4)",
@@ -193,30 +198,43 @@ const Hero = () => {
           </motion.button>
         </motion.div>
 
-        {/* Trust indicators - updated per spec */}
+        {/* Trust Strip - with icons */}
         <motion.div
-          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8 text-gray-700 opacity-90"
+          className="mt-12 flex flex-wrap items-center justify-center gap-3 md:gap-4"
           variants={getVariants(heroVariants.tagline)}
         >
-          <div className="flex items-center gap-2">
-            <span className="text-primary text-lg">🏠</span>
-            <span className="text-sm md:text-base font-medium">Local & dependable</span>
-          </div>
-          <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
-          <div className="flex items-center gap-2">
+          <motion.div 
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 border border-primary/10"
+            whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+            transition={{ duration: 0.2 }}
+          >
+            <span className="text-primary text-lg">🛡️</span>
+            <span className="text-sm md:text-base font-medium text-gray-700">Reliable</span>
+          </motion.div>
+          <motion.div 
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 border border-primary/10"
+            whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+            transition={{ duration: 0.2 }}
+          >
             <span className="text-primary text-lg">📅</span>
-            <span className="text-sm md:text-base font-medium">Flexible scheduling</span>
-          </div>
-          <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
-          <div className="flex items-center gap-2">
-            <span className="text-primary text-lg">🐕</span>
-            <span className="text-sm md:text-base font-medium">Pet‑friendly</span>
-          </div>
-          <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
-          <div className="flex items-center gap-2">
+            <span className="text-sm md:text-base font-medium text-gray-700">Flexible scheduling</span>
+          </motion.div>
+          <motion.div 
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 border border-primary/10"
+            whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+            transition={{ duration: 0.2 }}
+          >
+            <span className="text-primary text-lg">🏠</span>
+            <span className="text-sm md:text-base font-medium text-gray-700">Friendly to families & pets</span>
+          </motion.div>
+          <motion.div 
+            className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 border border-primary/10"
+            whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.95)" }}
+            transition={{ duration: 0.2 }}
+          >
             <span className="text-primary text-lg">💬</span>
-            <span className="text-sm md:text-base font-medium">Simple communication</span>
-          </div>
+            <span className="text-sm md:text-base font-medium text-gray-700">Straightforward communication</span>
+          </motion.div>
         </motion.div>
       </motion.div>
 

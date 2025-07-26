@@ -3,6 +3,7 @@ import { serviceVariants, sparkleVariants, scrollVariants, getVariants } from '.
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import ServiceCard from './ServiceCard';
+import ServicesTabs from './ServicesTabs';
 import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles.jsx';
 
 // Sparkle component for magical effects
@@ -19,80 +20,6 @@ const SparkleIcon = ({ delay = 0, size = "w-6 h-6", className = "" }) => (
   </motion.div>
 );
 
-// Service overview visual
-const ServiceOverview = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      className="max-w-4xl mx-auto mb-16 bg-white rounded-3xl p-8 shadow-soft"
-      variants={getVariants(scrollVariants.scaleIn)}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-    >
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-display font-semibold text-accent mb-4">
-          Services Overview
-        </h3>
-        <p className="text-gray-800 max-w-2xl mx-auto">
-          Owner-operated cleaning with straightforward service for three main areas:
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8 items-center">
-        {/* Homes */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-        >
-          <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
-            🏠
-            <SparkleIcon delay={0.3} className="top-1 right-1" size="w-3 h-3" />
-            <SparkleIcon delay={1.5} className="bottom-1 left-1" size="w-3 h-3" />
-          </div>
-          <h4 className="font-display text-lg font-medium text-primary mb-2">Home Cleaning</h4>
-          <p className="text-sm text-gray-800">kitchens, baths, bedrooms, living areas, floors</p>
-        </motion.div>
-
-        {/* Airbnb / STR */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-        >
-          <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
-            🏨
-            <SparkleIcon delay={0.7} className="top-1 right-1" size="w-3 h-3" />
-            <SparkleIcon delay={1.9} className="bottom-1 left-1" size="w-3 h-3" />
-          </div>
-          <h4 className="font-display text-lg font-medium text-primary mb-2">Airbnb / Short‑Term Rental</h4>
-          <p className="text-sm text-gray-800">guest‑ready turns, fresh linens, simple restock</p>
-        </motion.div>
-
-        {/* Small Offices */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-        >
-          <div className="w-24 h-24 mx-auto mb-4 bg-sparkle-gradient rounded-2xl flex items-center justify-center text-4xl relative sparkle-container">
-            🏢
-            <SparkleIcon delay={1.1} className="top-1 right-1" size="w-3 h-3" />
-            <SparkleIcon delay={2.3} className="bottom-1 left-1" size="w-3 h-3" />
-          </div>
-          <h4 className="font-display text-lg font-medium text-primary mb-2">Small Offices</h4>
-          <p className="text-sm text-gray-800">clear desks/common areas, restrooms, floors, trash</p>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-};
 
 // Main Services Component
 const Services = () => {
@@ -193,8 +120,8 @@ const Services = () => {
           </motion.p>
         </motion.div>
 
-        {/* Service overview */}
-        <ServiceOverview />
+        {/* Service overview with tabs */}
+        <ServicesTabs />
 
         {/* Services grid */}
         <motion.div
@@ -214,13 +141,13 @@ const Services = () => {
 
         {/* Call to action */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-20"
           variants={getVariants(scrollVariants.fadeInUp)}
           initial="hidden" 
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.button
-            className="btn-secondary text-lg px-12 py-5 sparkle-container"
+            className="btn-secondary text-lg px-12 py-5 sparkle-container mb-8"
             whileHover={{
               scale: 1.05,
               boxShadow: "0 15px 50px -10px rgba(0, 175, 175, 0.3)",

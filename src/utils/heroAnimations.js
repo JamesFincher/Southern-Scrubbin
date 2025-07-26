@@ -100,13 +100,14 @@ export const heroVariants = {
   },
 };
 
-// Sparkle animation variants for magical cleaning transformation
+// GPU-optimized Sparkle animation variants for magical cleaning transformation
 export const sparkleVariants = {
   floating: {
+    // Use transform3d to trigger hardware acceleration
     y: [0, -10, 0],
     x: [0, 5, 0],
     scale: [1, 1.1, 1],
-    rotate: [0, 180, 360],
+    rotateZ: [0, 180, 360],
     transition: {
       duration: 3,
       ease: easings.gentle,
@@ -128,7 +129,7 @@ export const sparkleVariants = {
   
   dancing: {
     y: [0, -15, 0],
-    rotate: [0, 10, -10, 0],
+    rotateZ: [0, 10, -10, 0],
     transition: {
       duration: 4,
       ease: easings.southern,
@@ -137,11 +138,11 @@ export const sparkleVariants = {
     },
   },
 
-  // Random sparkle variants for truly random twinkling
+  // GPU-optimized Random sparkle variants for truly random twinkling
   randomTwinkling: {
     opacity: [0.3, 1, 0.6, 0.9, 0.4],
     scale: [0.7, 1.3, 0.9, 1.1, 0.8],
-    rotate: [0, 45, 90, 135, 180, 225, 270, 315, 360],
+    rotateZ: [0, 45, 90, 135, 180, 225, 270, 315, 360],
     transition: {
       duration: () => 1.5 + Math.random() * 2.5, // 1.5s to 4s
       ease: easings.sparkle,
@@ -166,7 +167,7 @@ export const sparkleVariants = {
 
   randomDancing: {
     y: [0, -15 - Math.random() * 10, -5 + Math.random() * 5, 0],
-    rotate: [0, 10 + Math.random() * 15, -10 - Math.random() * 15, 0],
+    rotateZ: [0, 10 + Math.random() * 15, -10 - Math.random() * 15, 0],
     scale: [1, 1.1 + Math.random() * 0.2, 0.95, 1],
     transition: {
       duration: () => 3 + Math.random() * 2, // 3s to 5s

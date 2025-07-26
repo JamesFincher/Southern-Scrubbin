@@ -1,12 +1,14 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useRef } from 'react';
 import { useInView } from 'motion/react';
-import { scrollVariants, getVariants, easings, sparkleVariants } from '../utils/animations';
+import { scrollVariants, getVariants, easings } from '../utils/animations';
 import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles';
 
 // Individual FAQ Item Component
-const FAQItem = ({ faq, index, isOpen, onToggle }) => {
+const FAQItem = ({ faq, index, isOpen, onToggle, globalIndex }) => {
   const contentRef = useRef(null);
+  const questionId = `faq-question-${globalIndex}`;
+  const answerId = `faq-answer-${globalIndex}`;
   
   return (
     <motion.div
@@ -21,8 +23,17 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
     >
       {/* Question Button */}
       <motion.button
-        className="w-full px-6 py-5 text-left focus:outline-none focus:ring-4 focus:ring-primary-200 group"
+        id={questionId}
+        className="w-full px-6 py-5 text-left focus:outline-none focus:ring-4 focus:ring-primary-200 group min-h-[44px]"
         onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
+        aria-expanded={isOpen}
+        aria-controls={answerId}
         whileHover={{ backgroundColor: 'rgba(0, 175, 175, 0.02)' }}
         whileTap={{ scale: 0.99 }}
       >
@@ -35,6 +46,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
             animate={{ rotate: isOpen ? 45 : 0 }}
             transition={{ duration: 0.3, ease: easings.gentle }}
             whileHover={{ scale: 1.05 }}
+            aria-hidden="true"
           >
             {/* Interactive sparkle on hover */}
             <RandomSparkle
@@ -65,7 +77,10 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id={answerId}
             ref={contentRef}
+            role="region"
+            aria-labelledby={questionId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ 
               height: 'auto', 
@@ -107,42 +122,69 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
 // Main FAQs Component
 const FAQs = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [showAllFAQs, setShowAllFAQs] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const faqs = [
+  // Top 5 FAQs - exact copy from CONTENT_CHECKLIST.md lines 30-34
+  const topFAQs = [
     {
       question: "Do you bring supplies?",
-      answer: "Yes. If you prefer your products, set them out with a note."
+      answer: "Yes. If you prefer certain brands, tell me."
     },
     {
-      question: "Can you use scent‑free or specific brands?",
-      answer: "Absolutely—happy to use yours."
+      question: "Scent‑free options?",
+      answer: "Yes—just let me know."
     },
     {
-      question: "Do you clean interior windows?",
-      answer: "Yes, within safe reach (no tall ladders)."
+      question: "Recurring cleans?",
+      answer: "Yes: weekly, bi‑weekly, or monthly."
     },
     {
-      question: "Do you handle laundry?",
-      answer: "Homes: fold‑only add‑on with your detergent. STRs: on‑site if time allows."
+      question: "Interior windows?",
+      answer: "Reachable only; it's an add‑on."
     },
     {
-      question: "Do you take recurring cleans?",
-      answer: "Yes—weekly, bi‑weekly, or monthly once I know your space."
-    },
-    {
-      question: "Can I get an invoice or receipt?",
-      answer: "Yes—by email or text link."
-    },
-    {
-      question: "Need to reschedule?",
-      answer: "No problem—please give as much notice as you can."
+      question: "Invoices/receipts?",
+      answer: "Yes—emailed."
     }
   ];
 
+  // Additional FAQs (Q6-10) - created for "See All FAQs" expansion
+  const additionalFAQs = [
+    {
+      question: "What are your rates?",
+      answer: "Rates vary by size and frequency. I'll give you a clear quote after seeing your space."
+    },
+    {
+      question: "How far do you travel?",
+      answer: "I serve Ten Mile, Lenoir City, and surrounding Knoxville areas."
+    },
+    {
+      question: "Do you handle move-out cleans?",
+      answer: "Yes—deep cleans for move-outs are available with advance notice."
+    },
+    {
+      question: "Can you work around my schedule?",
+      answer: "Absolutely. I offer flexible scheduling including evenings and weekends."
+    },
+    {
+      question: "What if I'm not satisfied?",
+      answer: "I'll make it right. Your satisfaction is guaranteed—just let me know."
+    }
+  ];
+
+  // Combine FAQs based on showAllFAQs state
+  const displayedFAQs = showAllFAQs ? [...topFAQs, ...additionalFAQs] : topFAQs;
+
   const handleToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleShowAllToggle = () => {
+    setShowAllFAQs(!showAllFAQs);
+    // Close any open FAQ when toggling view
+    setOpenIndex(null);
   };
 
   return (
@@ -222,15 +264,82 @@ const FAQs = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {faqs.map((faq, index) => (
+          {displayedFAQs.map((faq, index) => (
             <FAQItem
-              key={index}
+              key={`${showAllFAQs ? 'all' : 'top'}-${index}`}
               faq={faq}
               index={index}
+              globalIndex={index}
               isOpen={openIndex === index}
               onToggle={() => handleToggle(index)}
             />
           ))}
+        </motion.div>
+
+        {/* See All FAQs Toggle */}
+        <motion.div
+          className="text-center mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <motion.button
+            onClick={handleShowAllToggle}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleShowAllToggle();
+              }
+            }}
+            className="inline-flex items-center px-8 py-4 bg-white rounded-xl shadow-soft hover:shadow-gentle border border-primary-100 hover:border-primary-200 transition-all duration-300 group min-h-[44px] focus:outline-none focus:ring-4 focus:ring-primary-200"
+            whileHover={{ 
+              scale: 1.02,
+              backgroundColor: 'rgba(240, 253, 253, 1)' 
+            }}
+            whileTap={{ scale: 0.98 }}
+            aria-expanded={showAllFAQs}
+            aria-label={showAllFAQs ? 'Show fewer FAQs' : 'Show all FAQs'}
+          >
+            <motion.span
+              className="text-primary font-medium mr-2"
+              initial={false}
+              animate={{ 
+                color: showAllFAQs ? '#007A7A' : '#00AFAF'
+              }}
+            >
+              {showAllFAQs ? 'Show Less' : 'See All FAQs'}
+            </motion.span>
+            
+            <motion.div
+              className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center relative overflow-hidden"
+              animate={{ 
+                rotate: showAllFAQs ? 180 : 0,
+                backgroundColor: showAllFAQs ? 'rgba(0, 122, 122, 0.1)' : 'rgba(0, 175, 175, 0.1)'
+              }}
+              transition={{ duration: 0.3, ease: easings.gentle }}
+            >
+              {/* Interactive sparkle on hover */}
+              <RandomSparkle
+                type="randomTwinkling"
+                delay={0}
+                size={0.5}
+                position={{ x: '50%', y: '50%' }}
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                emoji="✨"
+              />
+              
+              <motion.span
+                className="text-sm font-light text-primary relative z-10"
+                initial={false}
+                animate={{ 
+                  scale: showAllFAQs ? 1.1 : 1
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                {showAllFAQs ? '−' : '+'}
+              </motion.span>
+            </motion.div>
+          </motion.button>
         </motion.div>
 
         {/* Contact CTA */}

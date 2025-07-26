@@ -10,29 +10,29 @@ const HowItWorks = () => {
   const steps = [
     {
       number: "1",
-      title: "Reach out.",
-      description: "Send the estimate form with your city/ZIP, beds/baths (or office rooms), and what you'd like cleaned.",
+      title: "Reach out:",
+      description: "Send the estimate form with ZIP and what you need.",
       icon: "📝",
       color: "primary"
     },
     {
       number: "2", 
-      title: "Plan & schedule.",
-      description: "I'll confirm scope, share a clear plan, and set a time.",
+      title: "Plan:",
+      description: "I confirm scope and set a time.",
       icon: "💬",
       color: "secondary"
     },
     {
       number: "3",
-      title: "Clean day.",
-      description: "I show up on time, do the work we agreed to, and check that you're happy.",
+      title: "Clean day:",
+      description: "I do the work we agreed—no drama, no shortcuts.",
       icon: "✨",
       color: "accent"
     }
   ];
 
   return (
-    <section className="relative py-20 bg-white overflow-hidden" id="how-it-works">
+    <section className="relative py-20 bg-white overflow-hidden" id="how">
       {/* Background Sparkles */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Floating background sparkles using mix of regular and random variants */}
@@ -138,11 +138,18 @@ const HowItWorks = () => {
 
         {/* Steps */}
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+          {/* Stepper Component */}
+          <ol 
+            className="stepper-container grid md:grid-cols-3 gap-8 md:gap-12"
+            role="list"
+            aria-label="How it works - 3 steps to get your space cleaned"
+          >
             {steps.map((step, index) => (
-              <motion.div
+              <motion.li
                 key={index}
                 className="relative text-center"
+                role="listitem"
+                aria-current={index === 0 ? "step" : undefined}
                 initial={{ opacity: 0, y: 60 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
                 transition={{ 
@@ -153,7 +160,7 @@ const HowItWorks = () => {
               >
                 {/* Step number circle */}
                 <motion.div
-                  className={`w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center text-2xl font-bold text-white relative sparkle-container
+                  className={`step-circle sparkle-container ${step.color}
                     ${step.color === 'primary' ? 'bg-primary' : 
                       step.color === 'secondary' ? 'bg-secondary' : 'bg-accent'}`}
                   whileHover={{ 
@@ -163,6 +170,9 @@ const HowItWorks = () => {
                                "0 10px 30px -5px rgba(0, 122, 122, 0.4)"
                   }}
                   transition={{ duration: 0.3 }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Step ${step.number}: ${step.title} ${step.description}`}
                 >
                   <span className="relative z-10">{step.number}</span>
                   
@@ -259,11 +269,11 @@ const HowItWorks = () => {
                 </motion.div>
 
                 {/* Step content */}
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-display font-semibold text-accent">
+                <div className="step-content">
+                  <h3 className="step-title">
                     {step.title}
                   </h3>
-                  <p className="text-gray-800 leading-relaxed max-w-sm mx-auto">
+                  <p className="step-description">
                     {step.description}
                   </p>
                 </div>
@@ -275,13 +285,14 @@ const HowItWorks = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={isInView ? { opacity: 0.6, x: 0 } : { opacity: 0, x: -20 }}
                     transition={{ delay: index * 0.2 + 0.8, duration: 0.6 }}
+                    aria-hidden="true"
                   >
                     →
                   </motion.div>
                 )}
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
+          </ol>
         </div>
 
         {/* Call to action */}

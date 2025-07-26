@@ -94,15 +94,10 @@ const AirbnbTurns = () => {
               ].map((item, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <motion.span 
-                    className="text-primary relative"
+                    className="text-primary"
                     variants={scrollVariants.item}
                   >
                     ✓
-                    <SparkleIcon 
-                      delay={index * 0.2 + 0.5} 
-                      className="top-0 -right-1" 
-                      size="w-2 h-2" 
-                    />
                   </motion.span>
                   <span>{item}</span>
                 </li>
