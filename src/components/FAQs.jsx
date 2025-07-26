@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useRef } from 'react';
 import { useInView } from 'motion/react';
-import { scrollVariants, getVariants, easings } from '../utils/animations';
+import { scrollVariants, getVariants, easings, sparkleVariants } from '../utils/animations';
+import { BackgroundSparkles, RandomSparkle } from '../utils/randomSparkles';
 
 // Individual FAQ Item Component
 const FAQItem = ({ faq, index, isOpen, onToggle }) => {
@@ -30,12 +31,23 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
             {faq.question}
           </h3>
           <motion.div
-            className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary group-hover:bg-primary-100 transition-colors duration-300"
+            className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary group-hover:bg-primary-100 transition-colors duration-300 relative overflow-hidden"
             animate={{ rotate: isOpen ? 45 : 0 }}
             transition={{ duration: 0.3, ease: easings.gentle }}
+            whileHover={{ scale: 1.05 }}
           >
+            {/* Interactive sparkle on hover */}
+            <RandomSparkle
+              type="randomTwinkling"
+              delay={index * 0.2}
+              size={0.5}
+              position={{ x: '50%', y: '50%' }}
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              emoji="✨"
+            />
+            
             <motion.span
-              className="text-xl font-light"
+              className="text-xl font-light relative z-10"
               initial={false}
               animate={{ 
                 scale: isOpen ? 1.1 : 1,
@@ -134,21 +146,56 @@ const FAQs = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-50" id="faqs">
-      <div className="max-w-4xl mx-auto px-4">
+    <section className="py-20 bg-gray-50 relative overflow-hidden" id="faqs">
+      {/* Background Sparkles */}
+      <BackgroundSparkles 
+        count={6} 
+        className="opacity-20" 
+        sparkleEmoji="✨" 
+      />
+      
+      <div className="max-w-4xl mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
           ref={ref}
-          className="text-center mb-16"
+          className="text-center mb-16 relative"
           variants={getVariants(scrollVariants.fadeInUp)}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
+          {/* Header sparkles */}
+          <RandomSparkle
+            type="randomFloating"
+            delay={0.5}
+            size={0.8}
+            position={{ x: '15%', y: '20%' }}
+            className="text-primary/40"
+            emoji="❓"
+          />
+          <RandomSparkle
+            type="randomDancing"
+            delay={1.2}
+            size={0.6}
+            position={{ x: '85%', y: '30%' }}
+            className="text-secondary/50"
+            emoji="✨"
+          />
+          
           <motion.h2
-            className="text-5xl md:text-6xl font-display font-bold text-accent mb-6"
+            className="text-5xl md:text-6xl font-display font-bold text-accent mb-6 relative z-10"
             variants={getVariants(scrollVariants.fadeInUp)}
           >
-            Got <span className="text-primary">Questions</span>?
+            Got <span className="text-primary relative">
+              Questions
+              <RandomSparkle
+                type="randomTwinkling"
+                delay={2}
+                size={0.4}
+                position={{ x: '105%', y: '10%' }}
+                className="text-primary/60"
+                emoji="✨"
+              />
+            </span>?
           </motion.h2>
           <motion.p
             className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed"
@@ -202,13 +249,31 @@ const FAQs = () => {
               about your specific cleaning needs.
             </p>
             <motion.button
-              className="btn-primary sparkle-container"
+              className="btn-primary sparkle-container relative overflow-hidden group"
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 15px 50px -10px rgba(0, 175, 175, 0.3)",
               }}
               whileTap={{ scale: 0.98 }}
             >
+              {/* Button sparkles on hover */}
+              <RandomSparkle
+                type="randomTwinkling"
+                delay={0}
+                size={0.7}
+                position={{ x: '20%', y: '30%' }}
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white/80"
+                emoji="✨"
+              />
+              <RandomSparkle
+                type="randomDancing"
+                delay={0.3}
+                size={0.5}
+                position={{ x: '80%', y: '70%' }}
+                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white/60"
+                emoji="✨"
+              />
+              
               <span className="relative z-10">Get in Touch</span>
             </motion.button>
           </div>
