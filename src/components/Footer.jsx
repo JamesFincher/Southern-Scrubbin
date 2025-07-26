@@ -6,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gray-900 text-white py-8 overflow-hidden">
+    <footer className="relative bg-accent py-16 overflow-hidden">
       {/* Subtle background sparkles - fewer and lighter for footer */}
       <BackgroundSparkles 
         count={4} 
@@ -38,10 +38,10 @@ const Footer = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
         {/* Logo with sparkle on hover */}
         <motion.h3 
-          className="text-xl font-bold mb-4 relative inline-block"
+          className="text-3xl font-display font-bold mb-8 relative inline-block text-white"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
         >
@@ -57,11 +57,11 @@ const Footer = () => {
         </motion.h3>
         
         {/* Social links with sparkle effects */}
-        <div className="flex gap-4 justify-center mb-6">
+        <div className="flex gap-8 justify-center mb-8">
           <motion.a 
             href="https://facebook.com/sparklescrub" 
-            className="relative text-blue-400 hover:text-blue-300 transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
+            className="relative text-white/90 hover:text-secondary transition-colors duration-300 text-lg font-medium"
+            whileHover={{ scale: 1.1, y: -2 }}
             transition={{ duration: 0.2 }}
           >
             Facebook
@@ -75,8 +75,8 @@ const Footer = () => {
           </motion.a>
           <motion.a 
             href="https://instagram.com/sparklescrub" 
-            className="relative text-pink-400 hover:text-pink-300 transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
+            className="relative text-white/90 hover:text-secondary transition-colors duration-300 text-lg font-medium"
+            whileHover={{ scale: 1.1, y: -2 }}
             transition={{ duration: 0.2 }}
           >
             Instagram
@@ -90,8 +90,8 @@ const Footer = () => {
           </motion.a>
           <motion.a 
             href="https://tiktok.com/@sparklescrub" 
-            className="relative text-gray-400 hover:text-gray-300 transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
+            className="relative text-white/90 hover:text-secondary transition-colors duration-300 text-lg font-medium"
+            whileHover={{ scale: 1.1, y: -2 }}
             transition={{ duration: 0.2 }}
           >
             TikTok
@@ -105,10 +105,21 @@ const Footer = () => {
           </motion.a>
         </div>
 
+        {/* Decorative divider */}
+        <div className="w-24 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-6"></div>
+        
         {/* Copyright */}
-        <p className="text-gray-400 text-sm">
+        <motion.p 
+          className="text-white/70 text-base font-medium"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
           © {currentYear} Sparkle Scrub • Knoxville, TN
-        </p>
+        </motion.p>
+        
+        {/* Bottom accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-primary"></div>
       </div>
     </footer>
   );
